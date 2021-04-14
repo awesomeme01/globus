@@ -3,12 +3,14 @@ package com.example.demo.controller;
 import com.example.demo.model.Item;
 import com.example.demo.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/items")
+@Secured("ROLE_USER")
+@RequestMapping("/api/items")
 public class ItemController {
     @Autowired
     ItemService itemService;

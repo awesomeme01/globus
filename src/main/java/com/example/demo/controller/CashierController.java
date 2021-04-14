@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("cashier")
+@RequestMapping("/public/cashier")
 public class CashierController {
     @Autowired
     CashierService cashierService;

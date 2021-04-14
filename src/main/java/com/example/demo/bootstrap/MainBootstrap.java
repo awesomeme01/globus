@@ -2,12 +2,17 @@ package com.example.demo.bootstrap;
 
 import com.example.demo.model.Cashier;
 import com.example.demo.model.Item;
+import com.example.demo.model.User;
+import com.example.demo.model.UserRole;
 import com.example.demo.repository.CashierRepository;
 import com.example.demo.repository.ItemRepository;
+import com.example.demo.repository.UserRepository;
+import com.example.demo.repository.UserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -18,9 +23,22 @@ public class MainBootstrap implements ApplicationRunner {
     CashierRepository cashierRepository;
     @Autowired
     ItemRepository itemRepository;
+    @Autowired
+    UserRepository userRepository;
+    @Autowired
+    UserRoleRepository userRoleRepository;
     @Override
     public void run(ApplicationArguments args) throws Exception {
         try{
+
+            BCryptPasswordEncoder b = new BCryptPasswordEncoder();
+
+            User user = new User("admin", b.encode("123"));
+            userRepository.save(user);
+            UserRole userRole = new UserRole("ROLE_USER", user);
+            userRoleRepository.save(userRole);
+
+
             Cashier cashier = new Cashier ("Kylie");
             cashierRepository.save(cashier);
             Item item1 = new Item("cheese",200, LocalDateTime.of(2001, 12,12,13,1),"milky-products",cashier);
